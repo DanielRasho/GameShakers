@@ -1,16 +1,20 @@
+using System;
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private int coinsRequired;
+    private int coins = 0;
+
+    // ---- COINS -----
+    public int Coins
     {
-        
+        get { return coins; }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddCoin()
     {
-        
+        if (coins < coinsRequired)
+            coins++;
     }
 }
