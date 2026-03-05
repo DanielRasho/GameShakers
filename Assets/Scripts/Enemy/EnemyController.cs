@@ -58,12 +58,6 @@ public class EnemyController : MonoBehaviour
                 gridState.MoveEnemy(gridPos, next);
                 gridPos = next;
 
-                if (animator != null)
-                {
-                    animator.SetFloat("InputX", currentDir.x);
-                    animator.SetFloat("InputY", currentDir.y);
-                }
-
                 // Wait for the slide to fully finish before deciding next step
                 yield return SmoothMove(GridToWorld(gridPos));
                 CheckPlayerCollision();
