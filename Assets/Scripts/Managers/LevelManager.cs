@@ -15,6 +15,21 @@ public class LevelManager : MonoBehaviour
     public int Informes => informes;
 
     [SerializeField] private Toggle informeToggle;
+    [SerializeField] private Toggle entregarCafeToggle;
+
+
+    public bool tieneCafe = false;
+    public bool cafeEntregado = false;
+
+    public bool TieneCafe => tieneCafe;
+    public bool CafeEntregado => cafeEntregado;
+
+
+    public void Start()
+    {
+        if (informeToggle != null) informeToggle.isOn = false;
+        if (entregarCafeToggle != null) entregarCafeToggle.isOn = false;
+    }
 
 
     // ---- COINS -----
@@ -50,4 +65,28 @@ public class LevelManager : MonoBehaviour
             informeToggle.isOn = true;
     }
 
+    //--- cafe ---
+    public void RecogerCafe()
+    {
+        if (tieneCafe || cafeEntregado)
+            return;
+
+        tieneCafe = true;
+        Debug.Log("Cafe recogido");
+
+    }
+
+    public void EntregarCafe()
+    {
+        if (!tieneCafe || cafeEntregado)
+            return;
+
+        tieneCafe = false;
+        cafeEntregado = true;
+
+        Debug.Log("Cafe entregado a la jefa");
+
+        if (entregarCafeToggle != null)
+            entregarCafeToggle.isOn = true;
+    }
 }
