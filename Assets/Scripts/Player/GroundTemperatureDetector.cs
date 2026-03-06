@@ -193,4 +193,12 @@ public class GroundTemperatureByTilemap : MonoBehaviour
         float normalizedTemperature = Mathf.InverseLerp(minTemperature, maxTemperature, currentTemperature);
         arrowAnimator.SetFloat("TemperatureNormalized", normalizedTemperature);
     }
+
+    public void ApplyDashTemperature(int amount)
+    {
+        currentTemperature += amount;
+        currentTemperature = Mathf.Clamp(currentTemperature, minTemperature, maxTemperature);
+        UpdateTemperatureUI();
+        CheckEndState();
+    }
 }
