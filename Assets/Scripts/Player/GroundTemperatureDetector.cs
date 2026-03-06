@@ -18,10 +18,20 @@ public class GroundTemperatureByTilemap : MonoBehaviour
 
     [Header("Temperatura")]
     [SerializeField] private int currentTemperature = 0;
+    [SerializeField] private int minTemperature = -5;
+    [SerializeField] private int maxTemperature = 5;
+
+    [Header("UI de derrota")]
+    [SerializeField] private GameObject burnedCanvas;
+    [SerializeField] private GameObject frozenCanvas;
+
+    [Header("Referencias")]
+    [SerializeField] private PlayerInput playerInput;
 
     private float timer = 0f;
     private GroundType lastGroundType = GroundType.None;
     private bool lastMovingState = false;
+    private bool gameEnded = false;
 
     private enum GroundType
     {
@@ -31,8 +41,22 @@ public class GroundTemperatureByTilemap : MonoBehaviour
         Cold
     }
 
+    private void Start()
+    {
+        if (burnedCanvas != null)
+            burnedCanvas.SetActive(false);
+
+        if (frozenCanvas != null)
+            frozenCanvas.SetActive(false);
+
+        if (playerInput == null)
+            playerInput = GetComponent<PlayerInput>();
+    }
+
     private void Update()
     {
+        if (gameEnded) return;
+
         GroundType currentGround = DetectGroundType();
         bool isMoving = IsPlayerMoving();
 
@@ -97,14 +121,18 @@ public class GroundTemperatureByTilemap : MonoBehaviour
         {
             case GroundType.Hot:
                 currentTemperature += 1;
-                Debug.Log($"HOT | {(isMoving ? "Moviéndose" : "Quieto")} | Temperatura: {currentTemperature}");
                 break;
 
             case GroundType.Cold:
                 currentTemperature -= 1;
-                Debug.Log($"COLD | {(isMoving ? "Moviéndose" : "Quieto")} | Temperatura: {currentTemperature}");
                 break;
         }
+
+        currentTemperature = Mathf.Clamp(currentTemperature, minTemperature, maxTemperature);
+
+        Debug.Log($"{groundType} | {(isMoving ? "Moviéndose" : "Quieto")} | Temperatura: {currentTemperature}");
+
+        CheckEndState();
     }
 
     private float GetCurrentInterval(GroundType groundType, bool isMoving)
@@ -119,6 +147,38 @@ public class GroundTemperatureByTilemap : MonoBehaviour
 
             default:
                 return slowInterval;
+        }
+    }
+
+    private void CheckEndState()
+    {
+        if (currentTemperature >= maxTemperature)
+        {
+            gameEnded = true;
+
+            if (burnedCanvas != null)
+                burnedCanvas.SetActive(true);
+
+            DisablePlayerInput();
+            return;
+        }
+
+        if (currentTemperature <= minTemperature)
+        {
+            gameEnded = true;
+
+            if (frozenCanvas != null)
+                frozenCanvas.SetActive(true);
+
+            DisablePlayerInput();
+        }
+    }
+
+    private void DisablePlayerInput()
+    {
+        if (playerInput != null)
+        {
+            playerInput.enabled = false;
         }
     }
 }
