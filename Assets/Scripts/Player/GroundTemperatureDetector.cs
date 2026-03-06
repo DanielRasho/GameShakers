@@ -27,6 +27,7 @@ public class GroundTemperatureByTilemap : MonoBehaviour
 
     [Header("Referencias")]
     [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private Animator arrowAnimator;
 
     private float timer = 0f;
     private GroundType lastGroundType = GroundType.None;
@@ -39,6 +40,11 @@ public class GroundTemperatureByTilemap : MonoBehaviour
         Neutral,
         Hot,
         Cold
+    }
+
+    private void Awake()
+    {
+        UpdateTemperatureUI();
     }
 
     private void Start()
@@ -129,9 +135,7 @@ public class GroundTemperatureByTilemap : MonoBehaviour
         }
 
         currentTemperature = Mathf.Clamp(currentTemperature, minTemperature, maxTemperature);
-
-        Debug.Log($"{groundType} | {(isMoving ? "Moviéndose" : "Quieto")} | Temperatura: {currentTemperature}");
-
+        UpdateTemperatureUI();
         CheckEndState();
     }
 
@@ -180,5 +184,13 @@ public class GroundTemperatureByTilemap : MonoBehaviour
         {
             playerInput.enabled = false;
         }
+    }
+
+    private void UpdateTemperatureUI()
+    {
+        if (arrowAnimator == null) return;
+
+        float normalizedTemperature = Mathf.InverseLerp(minTemperature, maxTemperature, currentTemperature);
+        arrowAnimator.SetFloat("TemperatureNormalized", normalizedTemperature);
     }
 }
