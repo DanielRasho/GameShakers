@@ -14,9 +14,13 @@ public class LevelManager : MonoBehaviour
     private int informes = 0;
     public int Informes => informes;
 
-    [SerializeField] private Toggle informeToggle;
-    [SerializeField] private Toggle entregarCafeToggle;
+    private bool informeImpreso = false;
+    public bool InformeImpreso => informeImpreso;
 
+    [SerializeField] private Toggle entregarCafeToggle;
+    [SerializeField] private Toggle informeToggle;
+    [SerializeField] private Toggle imprimirInformeToggle;
+    
 
     public bool tieneCafe = false;
     public bool cafeEntregado = false;
@@ -28,6 +32,7 @@ public class LevelManager : MonoBehaviour
     public void Start()
     {
         if (informeToggle != null) informeToggle.isOn = false;
+        if (imprimirInformeToggle != null) imprimirInformeToggle.isOn = false;
         if (entregarCafeToggle != null) entregarCafeToggle.isOn = false;
     }
 
@@ -47,10 +52,24 @@ public class LevelManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (coins == coinsRequired)
+        if (informes == informesRequired && CafeEntregado == true && informeImpreso == true)
         {
             victoryUI.SetActive(true);
         }
+    }
+
+    // --- imprimir ---
+    public void MarcarInformeImpreso()
+    {
+        if (informeImpreso)
+            return;
+
+        informeImpreso = true;
+
+        if (imprimirInformeToggle != null)
+            imprimirInformeToggle.isOn = true;
+
+        Debug.Log("Informe impreso");
     }
 
     // --- Informe ---
@@ -89,4 +108,5 @@ public class LevelManager : MonoBehaviour
         if (entregarCafeToggle != null)
             entregarCafeToggle.isOn = true;
     }
+
 }
