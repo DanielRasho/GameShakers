@@ -33,6 +33,8 @@ public class GroundTemperatureByTilemap : MonoBehaviour
     private GroundType lastGroundType = GroundType.None;
     private bool lastMovingState = false;
     private bool gameEnded = false;
+    private FreeMovement freeMovement;
+
 
     private enum GroundType
     {
@@ -57,6 +59,8 @@ public class GroundTemperatureByTilemap : MonoBehaviour
 
         if (playerInput == null)
             playerInput = GetComponent<PlayerInput>();
+
+        freeMovement = GetComponent<FreeMovement>();
     }
 
     private void Update()
@@ -111,14 +115,31 @@ public class GroundTemperatureByTilemap : MonoBehaviour
         return tilemap.GetTile(cellPosition) != null;
     }
 
+    //private bool IsPlayerMoving()
+    //{
+    //    if (Keyboard.current == null) return false;
+
+    //    return Keyboard.current.wKey.isPressed ||
+    //           Keyboard.current.aKey.isPressed ||
+    //           Keyboard.current.sKey.isPressed ||
+    //           Keyboard.current.dKey.isPressed;
+    //}
+
+
+
     private bool IsPlayerMoving()
     {
         if (Keyboard.current == null) return false;
 
-        return Keyboard.current.wKey.isPressed ||
-               Keyboard.current.aKey.isPressed ||
-               Keyboard.current.sKey.isPressed ||
-               Keyboard.current.dKey.isPressed;
+        bool wasdPressed = Keyboard.current.wKey.isPressed ||
+                           Keyboard.current.aKey.isPressed ||
+                           Keyboard.current.sKey.isPressed ||
+                           Keyboard.current.dKey.isPressed;
+
+        bool isDashing = freeMovement != null && freeMovement.IsDashing;
+
+
+        return wasdPressed || isDashing;
     }
 
     private void ApplyTemperatureEffect(GroundType groundType, bool isMoving)

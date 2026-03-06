@@ -4496,6 +4496,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 7b472e98-4876-43ef-bc89-330fe909c9b3
     m_ActionName: 'Player/Ice[/Keyboard/j]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1244075538}
+        m_TargetAssemblyTypeName: FreeMovement, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cffaba30-6222-47bb-b6ac-2759b737d29b
+    m_ActionName: 'Player/Dash[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -4624,6 +4640,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 5
+  dashSpeed: 15
+  dashDuration: 0.15
+  dashCooldown: 1
+  dashTemperatureCost: 1
 --- !u!58 &1244075539
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class FreeMovement : MonoBehaviour
     private GroundTemperatureByTilemap temperatureSystem;
 
     private bool isDashing = false;
+    public bool IsDashing => isDashing;
     private float dashCooldownTimer = 0f;
 
     void Start()
