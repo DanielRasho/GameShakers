@@ -217,9 +217,16 @@ public class GroundTemperatureByTilemap : MonoBehaviour
 
     public void ApplyDashTemperature(int amount)
     {
-        currentTemperature += amount;
-        currentTemperature = Mathf.Clamp(currentTemperature, minTemperature, maxTemperature);
-        UpdateTemperatureUI();
-        CheckEndState();
+        if (gameEnded) return;
+
+        GroundType currentGround = DetectGroundType();
+
+        if (currentGround == GroundType.Hot)
+        {
+            currentTemperature += amount;
+            currentTemperature = Mathf.Clamp(currentTemperature, minTemperature, maxTemperature);
+            UpdateTemperatureUI();
+            CheckEndState();
+        }
     }
 }
