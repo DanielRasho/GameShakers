@@ -7621,8 +7621,8 @@ MonoBehaviour:
   groundColdTilemap: {fileID: 1656911429}
   groundHotTilemap: {fileID: 374131983}
   feetOffset: {x: 0, y: -0.2, z: 0}
-  slowInterval: 3
-  fastInterval: 2
+  slowInterval: 1.5
+  fastInterval: 1
   currentTemperature: 0
   minTemperature: -5
   maxTemperature: 5
