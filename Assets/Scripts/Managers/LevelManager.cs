@@ -55,6 +55,13 @@ public class LevelManager : MonoBehaviour
         if (informes == informesRequired && CafeEntregado == true && informeImpreso == true)
         {
             victoryUI.SetActive(true);
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+
+#else
+        Application.Quit();
+
+#endif
         }
     }
 
